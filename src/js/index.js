@@ -1,1 +1,1 @@
-// Global app controller
+import string from './models/Search'
