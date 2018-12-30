@@ -1,6 +1,7 @@
 import { elements } from './base'
 
 export const getInput = () => elements.searchInput.value;
+
 export const clearInput = () => {
   elements.searchInput.value = '';
 }
@@ -41,6 +42,20 @@ const renderRecipe = recipe =>{
   console.log(recipe)
 };
 
-export const renderResults = (recipes) => {
-  recipes.forEach(el => renderRecipe(el))
+const limitRes = (array, quantity, pageNumber) => {
+  console.log(array)
+  const start = parseInt(pageNumber-1 * quantity);
+  const end = parseInt(pageNumber*quantity);
+  const truncatedArr = array.slice(start, end)
+
+  console.log("truncatedArr",truncatedArr)
+  return truncatedArr
+}
+
+export const renderResults = (recipes,pageNum=3,resPerPage=5) => {
+  const start = (pageNum-1) * resPerPage;
+  const end = pageNum * resPerPage;
+  console.log(recipes.slice(start,end));
+
+  recipes.slice(start,end).forEach(el => renderRecipe(el))
 }
