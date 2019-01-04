@@ -8,6 +8,7 @@ let state = {};
 const controlSearch = async () =>{
   // 1.  get the query from the view
   const query = searchView.getInput();
+
   if(query){
     // 2. New search object and add it to state
     state.search = new Search(query) // store it in the global object
@@ -20,8 +21,8 @@ const controlSearch = async () =>{
   await state.search.getResults()
   //5. render results on UI
   clearLoader();
+  console.log(state.search.result)
   searchView.renderResults(state.search.result)
-  // console.log (state.search.result)
 
 }
 
@@ -30,3 +31,14 @@ elements.searchForm.addEventListener('submit',(e)=>{
   e.preventDefault();
   controlSearch();
 })
+
+elements.searchResPages.addEventListener('click',(e)=>{
+  const btn = e.target.closest('.btn-inline')
+    if(btn){
+      const goToPage = parseInt(btn.dataset.goto);
+      searchView.clearResults();
+      searchView.renderResults(state.search.result,goToPage)
+
+    }
+
+  })
